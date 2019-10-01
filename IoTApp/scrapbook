@@ -1,0 +1,7 @@
+INSERT INTO APPUSER('2L', '3L');
+
+INSERT INTO APPUSER(PASSWORD, NAME, EMAIL, ID) VALUES ('Amit',
+'Bhattacharya', 's', 4);
+
+
+select name from appuser
