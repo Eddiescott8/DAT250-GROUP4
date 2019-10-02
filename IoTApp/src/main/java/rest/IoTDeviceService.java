@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.servlet.ServletContextEvent;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -69,7 +71,7 @@ public class IoTDeviceService {
 	}
 	
 	@GET
-	@Path("{id}/")
+	@Path("{id}/registration/{rid}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response getRegistrationOfDevice(@PathParam("id") String id, @PathParam("rid") String rid) {
 		UserDao uDao = new UserDao();
@@ -91,7 +93,7 @@ public class IoTDeviceService {
 	
 	@POST
 	@Path("{id}/")
-	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED})
 	public String registerDevice(@PathParam("id") String id, @QueryParam("user") long user_id) {
 		UserDao uDao = new UserDao();
 		long idLong = Long.parseLong(id);
@@ -106,6 +108,15 @@ public class IoTDeviceService {
 		u.followDevice(device);
 		uDao.persist(u);
 		return "Done "+u.getUsername();
+	}
+	
+	@GET
+	@Path("test/singleDevice")
+	@Produces(MediaType.APPLICATION_JSON)
+	public IoTDevice getSingle() {
+		IoTDevice device = new IoTDevice("TestDevice","SomeUrl","pathToPicture","A description","button");
+		device.setId(1);
+		return device;
 	}
 	
 	@GET

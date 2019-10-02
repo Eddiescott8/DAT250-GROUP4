@@ -67,6 +67,7 @@ public class IoTDevice implements Serializable {
 		this.feedbacks = new ArrayList<>();
 		this.categories = new HashSet<>();
 		this.numFollowers = 0;
+		this.requestedFollows = new HashSet<>();
 	}
 	
 	public IoTDevice() {		
